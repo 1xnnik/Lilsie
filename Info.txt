@@ -1,0 +1,43 @@
+
+
+
+! Enter privileged EXEC mode
+enable
+
+! Enter global configuration mode
+configure terminal
+
+! Create VLANs
+vlan 10
+ name Sales
+!
+vlan 20
+ name Engineering
+!
+vlan 30
+ name HR
+!
+
+! Assign interfaces to VLANs
+interface range GigabitEthernet0/1 - 4
+ switchport mode access
+ switchport access vlan 10
+!
+interface range GigabitEthernet0/5 - 8
+ switchport mode access
+ switchport access vlan 20
+!
+interface GigabitEthernet0/9
+ switchport mode access
+ switchport access vlan 30
+!
+
+! Configure a trunk port (to connect to another switch or a router)
+interface GigabitEthernet0/24
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+!
+
+! Save the configuration
+end
+write memory
