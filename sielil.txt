@@ -1,0 +1,50 @@
+////////switch2
+enable
+conf t
+int range fa0/1-9
+switchport mode access
+switchport access vlan 10
+exit
+int range fa0/10-19
+switchport mode access
+switchport access vlan 20
+exit
+int range fa0/20-24
+switchport mode access
+switchport access vlan 30
+exit
+int g0/1
+switchport mode trunk
+sw trunk allowed vlan 10,20,30
+sw trunk nativ vlan 66
+sw nonegociate
+////////switch1
+enable
+int g0/2
+switchport mode trunk
+sw trunk allowed vlan 10,20,30
+sw trunk nativ vlan 66
+sw nonegociate
+exit
+int g0/1
+switchport mode trunk
+sw trunk allowed vlan 10,20,30
+sw trunk nativ vlan 66
+sw nonegociate
+exit
+////////switch3
+enable 
+conf t
+int range fa0/1-9
+switchport mode access
+switchport access vlan 40
+exit
+int range fa0/10-19
+switchport mode access
+switchport access vlan 50
+exit
+int g0/1
+switchport mode trunk
+sw trunk allowed vlan 40,50
+sw trunk nativ vlan 66
+sw nonegociate
