@@ -1,0 +1,80 @@
+Hier sind die grundlegenden Befehle für die Grundkonfiguration eines Cisco-Routers:
+1. In den privilegierten Modus wechseln
+
+enable
+
+2. In den globalen Konfigurationsmodus wechseln
+
+configure terminal
+
+3. Hostname setzen
+
+hostname MeinRouter
+
+4. Passwörter setzen
+
+enable secret cisco123
+
+(Verschlüsselt das Passwort für den privilegierten Modus)
+5. Konsolenzugang mit Passwort sichern
+
+line console 0
+password cisco
+login
+exit
+
+6. Remote-Zugriff (Telnet/SSH) sichern
+
+line vty 0 4
+password vtypass
+login
+exit
+
+7. IP-Adresse auf einer Schnittstelle setzen
+
+interface GigabitEthernet0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+8. Default-Gateway setzen (für Layer-3-Switches oder Hosts, die kein DHCP haben)
+
+ip default-gateway 192.168.1.254
+
+9. Routing aktivieren (Beispiel für RIP)
+
+router rip
+version 2
+network 192.168.1.0
+no auto-summary
+exit
+
+10. NAT-Konfiguration (falls Internetzugang nötig ist)
+
+access-list 1 permit 192.168.1.0 0.0.0.255
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+interface GigabitEthernet0/0
+ip nat inside
+exit
+interface GigabitEthernet0/1
+ip nat outside
+exit
+
+11. DHCP-Server einrichten (optional)
+
+ip dhcp excluded-address 192.168.1.1 192.168.1.10
+ip dhcp pool LAN
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+exit
+
+12. Speichern der Konfiguration
+
+write memory
+
+oder
+
+copy running-config startup-config
+
+Das ist eine einfache Basiskonfiguration für einen Cisco-Router. Je nach Anwendungsfall kann sie erweitert werden.
